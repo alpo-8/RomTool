@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using RomTool.Blocks;
 
 namespace RomTool
 {
@@ -24,25 +25,25 @@ namespace RomTool
             
             var parsed = new Image(img.ToArray());
             
-            Out("Firmware Image bytes", img.Count);
+            img.Count.Out("Firmware Image bytes");
             
-            Out("ME Region bytes", parsed.ME.LongLength);
-            Out("Bios Region bytes", parsed.BIOS.Size);
-            Out("Empty pad-files total bytes", parsed.BIOS.Paddings.Values.Sum(x=>x));
-            var vols = parsed.BIOS.Volumes.Values;
-            Out("FFSv2 Volumes recognized", vols.Count);
-            var files = vols.SelectMany(x => x.Files.Values);
-            Out("Files recognized", files.Count());
-            var secs = files.SelectMany(x => x.Sections.Values);
-            Out("Sections recognized", secs.Count());
-            var subsecs = secs.SelectMany(x => x.SubSections.Values);
-            Out("SubSections recognized", subsecs.Count());
+            parsed.ME.LongLength.Out("ME Region bytes");
+            parsed.BIOS.Size.Out("Bios Region bytes");
+            var vols = parsed.BIOS.Volumes;
+            vols.Count.Out("FFSv2 Volumes recognized");
+            var files = vols.SelectMany(x => x.Files);
+            files.Count().Out("Files recognized");
+            var secs = files.SelectMany(x => x.Sections);
+            secs.Count().Out("Sections recognized");
+            var subsecs = secs.SelectMany(x => x.SubSections);
+            subsecs.Count().Out("SubSections recognized");
 
 
             //OutBytes(Image.ToArray(), 2048);
+            Console.ReadKey();
         }
         
-        private static void Out<T>(string text, T data)
+        private static void Out<T>(this T data, string text)
             => Console.WriteLine($"{text,-40} :\t{data.ToString()}");
         
         private static void OutBytes(byte[] bData, int? len = null)

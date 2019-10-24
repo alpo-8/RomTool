@@ -1,10 +1,19 @@
-using System.Linq;
-using System.Runtime.InteropServices;
-
-namespace RomTool
+namespace RomTool.Interfaces
 {
     public interface IBlock
     {
-        uint Size { get; }
+        public int Size { get; }
+    }
+
+    public abstract class Block : IBlock
+    {
+        public byte[] Body;
+
+        public int Size => Body.Length;
+    }
+
+    public abstract class HeadedBlock : Block
+    {
+        public IHeader Header;
     }
 }
