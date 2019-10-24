@@ -19,12 +19,12 @@ namespace RomTool.Interfaces
 
     public interface ITypedHeader : IHeader
     {
-        static byte _type;
+        private static byte _type;
 
         BlockType Type 
             => (BlockType)_type;
 
-        static void Load(UInt24 fullSize, byte type)
+        protected static void Load(UInt24 fullSize, byte type)
         {
             Load(fullSize);
             _type = type;
