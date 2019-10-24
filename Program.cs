@@ -30,13 +30,13 @@ namespace RomTool
             parsed.ME.LongLength.Out("ME Region bytes");
             parsed.BIOS.Size.Out("Bios Region bytes");
 
-            var vols = parsed.BIOS.Volumes;
+            var vols = parsed.BIOS.Subs;
             vols.Count.Out("FFSv2 Volumes recognized");
 
-            var files = vols.SelectMany(x => x.Files);
+            var files = vols.SelectMany(x => x.Subs);
             files.Count().Out("Files recognized");
 
-            var secs = files.SelectMany(x => x.Sections);
+            var secs = files.SelectMany(x => x.Subs);
             secs.Count().Out("Sections recognized");
 
             var subsecs = secs.SelectMany(x => x.SubSections);

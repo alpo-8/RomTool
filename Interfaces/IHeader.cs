@@ -5,7 +5,7 @@ namespace RomTool.Interfaces
     public interface IHeader
     {
         static UInt24 fullSize;
-        int FullSize => FullSize;
+        int FullSize => fullSize;
         int Size => GetType().StructLayoutAttribute.Size;
     }
 

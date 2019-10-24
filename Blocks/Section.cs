@@ -38,7 +38,7 @@ namespace RomTool.Blocks
             for (var i = 0; i < dat.Length - 0x4; i++)
             {
                 SubSections.Add(new Section(dat[i..]));
-                i += SubSections.Last().Header.FullSize;
+                i += SubSections.Last().Size;
             }
         }
 

@@ -6,28 +6,16 @@ using static RomTool.Util;
 
 namespace RomTool.Blocks
 {
-    public class File
+    public class File : HeadedBlock<FileHeader, Section>
     {
-        public IHeader Header;
-        public byte[] Body;
+        public File(byte[] data) : base(data) { }
 
-        public int Size => Header.FullSize;
-
-        public File(byte[] data)
-        {
-            Header = ByteArrayToStruct<FileHeader>(data);
-            Body = data[Header.Size..Size];
-            InitSections();
-        }
-
-        public List<Section> Sections = new List<Section>();
-
-        private void InitSections()
+        public override void InitSubs()
         {
             for (var i = 0; i < Body.LongLength - 0x4; i++)
             {
-                Sections.Add(new Section(Body[i..]));
-                i += Sections.Last().Header.FullSize;
+                Subs.Add(new Section(Body[i..]));
+                i += Subs.Last().Size;
             }
         }
     }

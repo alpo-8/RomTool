@@ -7,29 +7,17 @@ using static RomTool.Util;
 
 namespace RomTool.Blocks
 {
-    public class Volume
+    public class Volume : HeadedBlock<VolumeHeader, File>
     {
-        public IHeader Header;
-        public byte[] Body;
+        public Volume(byte[] data) : base(data) { }
 
-        public int Size => Header.FullSize;
-
-        public Volume(byte[] data)
-        {
-            Header = ByteArrayToStruct<VolumeHeader>(data);
-            Body = data[Header.Size..Size];
-            InitFiles();
-        }
-
-        public List<File> Files = new List<File>();
-
-        private void InitFiles()
+        public override void InitSubs()
         {
             int i = 0;
             while (i < Body.LongLength - 0x50 && !Body.Sub(i,0x50).SequenceEqual(EmPad))
             {
-                Files.Add(new File(Body[i..]));
-                i += Files.Last().Header.FullSize;
+                Subs.Add(new File(Body[i..]));
+                i += Subs.Last().Size;
             }
         }
     }

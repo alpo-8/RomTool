@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using RomTool.Interfaces;
 
 namespace RomTool.Headers
 {
     [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Unicode, Pack = 1, Size = 0x1000)]
-    public struct DescRegion
+    public struct DescRegion : IHeader
     {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
         [FieldOffset(0x10)]
@@ -33,15 +34,13 @@ namespace RomTool.Headers
 
         [FieldOffset(0x7e)]
         private ushort pttEnd;    // 0xFFF(FFF)
-
-        public int Size => GetType().StructLayoutAttribute.Size;
-
+        
         public Range MeRange => Multiplied(meStart, meEnd);
         public Range DevExpRange => Multiplied(devExpStart, devExpEnd);
         public Range GbeRange => Multiplied(gbeStart, gbeEnd);
         public Range PttRange => Multiplied(pttStart, pttEnd);
 
         Range Multiplied(int first, int last)
-            => (first * Size)..((last + 1) * Size);
+            => (first * 0x1000)..((last + 1) * 0x1000);
     }
 }
