@@ -21,7 +21,6 @@ namespace RomTool
                 return Marshal.PtrToStructure<T>((IntPtr)ptr);
         }
 
-        /*
         public static T ByteArrayToStructSafe<T>(byte[] data) where T : struct
         {
             T stuff;
@@ -36,6 +35,5 @@ namespace RomTool
             }
             return stuff;
         }
-        */
     }
 }

@@ -11,7 +11,7 @@ namespace RomTool.Interfaces
 
     public interface ITypedHeader : IHeader
     {
-        byte type { get; }
+        static byte type;
         BlockType Type => (BlockType)type;
     }
 }

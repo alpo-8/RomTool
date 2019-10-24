@@ -15,7 +15,7 @@ namespace RomTool.Blocks
 
         public File(byte[] data)
         {
-            Header = Util.ByteArrayToStruct<FileHeader>(data);
+            Header = ByteArrayToStruct<FileHeader>(data);
             Body = data[Header.Size..Size];
             InitSections();
         }

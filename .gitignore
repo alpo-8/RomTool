@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.idea/.idea.RomTool
+/obj
+/bin/Debug
+/.vs/RomTool
+/RomTool.sln.DotSettings.user

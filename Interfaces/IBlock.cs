@@ -1,8 +1,10 @@
+using static RomTool.Util;
+
 namespace RomTool.Interfaces
 {
     public interface IBlock
     {
-        public int Size { get; }
+        int Size { get; }
     }
 
     public abstract class Block : IBlock
@@ -10,10 +12,30 @@ namespace RomTool.Interfaces
         public byte[] Body;
 
         public int Size => Body.Length;
+
+        protected Block(byte[] data)
+        {
+            Body = data;
+            InitActivity();
+        }
+
+        public abstract void InitActivity();
     }
 
-    public abstract class HeadedBlock : Block
+    public abstract class HeadedBlock<T> : Block where T : struct, IHeader
     {
-        public IHeader Header;
+        public T Header;
+
+        public new int Size => Header.FullSize;
+
+        public HeadedBlock(byte[] data) : base(data)
+        {
+            Header = ByteArrayToStruct<T>(data);
+            
+            Body = data[Header.Size..Size];
+            InitActivity();
+        }
     }
+
+    
 }

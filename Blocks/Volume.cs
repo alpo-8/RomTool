@@ -17,7 +17,7 @@ namespace RomTool.Blocks
         public Volume(byte[] data)
         {
             Header = ByteArrayToStruct<VolumeHeader>(data);
-            Body = data[Header.Size..Header.FullSize];
+            Body = data[Header.Size..Size];
             InitFiles();
         }
 
@@ -26,7 +26,7 @@ namespace RomTool.Blocks
         private void InitFiles()
         {
             int i = 0;
-            while (i < Body.LongLength - 0x50 && Body[i..(i + 0x50)].SequenceEqual(EmPad))
+            while (i < Body.LongLength - 0x50 && !Body.Sub(i,0x50).SequenceEqual(EmPad))
             {
                 Files.Add(new File(Body[i..]));
                 i += Files.Last().Header.FullSize;

@@ -29,15 +29,18 @@ namespace RomTool
             
             parsed.ME.LongLength.Out("ME Region bytes");
             parsed.BIOS.Size.Out("Bios Region bytes");
+
             var vols = parsed.BIOS.Volumes;
             vols.Count.Out("FFSv2 Volumes recognized");
+
             var files = vols.SelectMany(x => x.Files);
             files.Count().Out("Files recognized");
+
             var secs = files.SelectMany(x => x.Sections);
             secs.Count().Out("Sections recognized");
+
             var subsecs = secs.SelectMany(x => x.SubSections);
             subsecs.Count().Out("SubSections recognized");
-
 
             //OutBytes(Image.ToArray(), 2048);
             Console.ReadKey();
@@ -51,7 +54,7 @@ namespace RomTool
             int i, j = 0;
             var outText = new StringBuilder("        ", 16 * 4 + 8);
             
-            for (i = 0; i < (len??bData.Length); i++)
+            for (i = 0; i < (len ?? bData.Length); i++)
             {
                 outText.Insert(j * 3, $"{(int)bData[i]:X2} ");
                 var dChar = (char)bData[i];

@@ -34,9 +34,8 @@ namespace RomTool.Blocks
 
         private void InitSubSections()
         {
-            int i = 0;
             var dat = Lzma.Decompress(Body);
-            while (i < dat.LongLength - 0x4)
+            for (var i = 0; i < dat.Length - 0x4; i++)
             {
                 SubSections.Add(new Section(dat[i..]));
                 i += SubSections.Last().Header.FullSize;
