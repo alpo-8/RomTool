@@ -19,7 +19,7 @@ namespace RomTool.Interfaces
 
     public interface ITypedHeader : IHeader
     {
-        private static byte _type;
+        private static byte _type = 0x00;
 
         BlockType Type 
             => (BlockType)_type;
